@@ -1,9 +1,39 @@
 import io
 from datetime import datetime
 
+from PIL import Image
+from django.conf import settings
 from django.http import HttpResponse, FileResponse
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
+
+
+def load_brasao_img():
+    image_name = 'coat-of-arms-64.jpg'
+    file_path = settings.BASE_DIR / 'app/img/' / image_name
+    image = Image.open(file_path)
+
+    # new_width = 128
+    # new_height = 128
+    # resized_image = image.resize((new_width, new_height), Image.ANTIALIAS)
+
+    return image
+
+
+def draw_brasao_first_record(p, x, y, width, height):
+    brasao1 = load_brasao_img()
+    p.drawInlineImage(brasao1, x + 20, y + height - 80)
+
+    brasao2 = load_brasao_img()
+    p.drawInlineImage(brasao2, width - 60, y + height - 80)
+
+
+def draw_brasao_second_record(p, x, width, height):
+    brasao1 = load_brasao_img()
+    p.drawInlineImage(brasao1, x + 20, height - 60)
+
+    brasao2 = load_brasao_img()
+    p.drawInlineImage(brasao2, width - 60, height - 60)
 
 
 def pdf1(request):
@@ -37,15 +67,21 @@ def pdf2(request):
     buffer = io.BytesIO()
     p = canvas.Canvas(buffer, pagesize=A4)
 
+    # Modified
     # A4 - 595 x 842
     x = 20
-    y1 = 20
+    y2 = 20
     width = 555
     height = 391
-    y2 = 431
+    y1 = 431
 
     p.rect(x, y1, width, height)
     p.rect(x, y2, width, height)
+
+    draw_brasao_first_record(p, x, y1, width, height)
+    draw_brasao_second_record(p, x, width, height)
+
+    # /Modified
 
     # Data to print
     data = {
