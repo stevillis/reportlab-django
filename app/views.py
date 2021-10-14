@@ -205,7 +205,7 @@ def draw_section_fields(p, x, first_section=True):
                          '10/09/2012', data_registro_value_x, data_registro_value_y)
 
     servidor_responsavel_label_x = x + 20
-    servidor_responsavel_label_y = data_registro_label_y - 15
+    servidor_responsavel_label_y = data_registro_label_y - 25
     servidor_responsavel_value_x = servidor_responsavel_label_x + 180
     servidor_responsavel_value_y = servidor_responsavel_label_y
     draw_column_registro(p, 'Servidor Responsável pelo Registro:', servidor_responsavel_label_x,
@@ -219,21 +219,21 @@ def draw_section_fields(p, x, first_section=True):
     draw_column_registro(p, 'SIAPE:', siape_label_x, siape_label_y, '1162995', siape_value_x, siape_value_y)
 
     visto_superior_label_x = x + 20
-    visto_superior_label_y = servidor_responsavel_label_y - 15
+    visto_superior_label_y = servidor_responsavel_label_y - 25
     visto_superior_value_x = visto_superior_label_x + 75
     visto_superior_value_y = visto_superior_label_y
     draw_column_registro(p, 'Visto Superior:', visto_superior_label_x, visto_superior_label_y, '_' * 60,
                          visto_superior_value_x, visto_superior_value_y)
 
     siape_superior_label_x = visto_superior_label_x + 425
-    siape_superior_label_y = servidor_responsavel_label_y - 15
+    siape_superior_label_y = visto_superior_label_y
     siape_superior_value_x = siape_superior_label_x + 35
     siape_superior_value_y = siape_superior_label_y
     draw_column_registro(p, 'SIAPE:', siape_superior_label_x, siape_superior_label_y, '_' * 10,
                          siape_superior_value_x, siape_superior_value_y)
 
     observacao_label_x = x + 20
-    observacao_label_y = visto_superior_label_y - 15
+    observacao_label_y = visto_superior_label_y - 25
     observacao_value_x = observacao_label_x + 65
     observacao_value_y = observacao_label_y
     draw_column_registro(p, 'Observação:', observacao_label_x, observacao_label_y,
