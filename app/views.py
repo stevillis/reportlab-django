@@ -23,20 +23,15 @@ def load_brasao_img():
     return image
 
 
-def draw_brasao_first_record(p, x, y, width, height):
+def draw_section_images(p, x, y, width, height, first_section=True):
     brasao1 = load_brasao_img()
-    p.drawInlineImage(brasao1, x + 20, y + height - 70)
-
     brasao2 = load_brasao_img()
-    p.drawInlineImage(brasao2, width - 60, y + height - 70)
-
-
-def draw_brasao_second_record(p, x, width, height):
-    brasao1 = load_brasao_img()
-    p.drawInlineImage(brasao1, x + 20, height - 15)
-
-    brasao2 = load_brasao_img()
-    p.drawInlineImage(brasao2, width - 60, height - 15)
+    if first_section:
+        p.drawInlineImage(brasao1, x + 20, y + height - 70)
+        p.drawInlineImage(brasao2, width - 60, y + height - 70)
+    else:
+        p.drawInlineImage(brasao1, x + 20, height - 15)
+        p.drawInlineImage(brasao2, width - 60, height - 15)
 
 
 def draw_column_registro(canv, label, label_x, label_y, value, value_x, value_y):
@@ -69,32 +64,15 @@ def pdf1(request):
     return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
 
 
-def pdf2(request):
-    response = HttpResponse(content_type='application/pdf')
-    d = datetime.today().strftime('%d-%m-%Y %H-%M-%S')
-    response['Content-Disposition'] = f'inline; filename="{d}.pdf"'
-
-    buffer = io.BytesIO()
-    p = canvas.Canvas(buffer, pagesize=A4)
-
-    # Modified
-    # A4 - 595 x 842
-    x = 20
-    y2 = 55
-    width = 555
-    height = 365
-    y1 = 435
-
-    p.rect(x, y1, width, height)
-    p.rect(x, y2, width, height)
-
-    draw_brasao_first_record(p, x, y1, width, height)
-    draw_brasao_second_record(p, x, width, height)
-
+def draw_section_fields(p, x, first_section=True):
     livro_label_x = x + 20
-    livro_label_y = PAGE_HEIGHT - 130
     livro_value_x = livro_label_x + 30
+    if first_section:
+        livro_label_y = PAGE_HEIGHT - 130
+    else:
+        livro_label_y = PAGE_HEIGHT - 510
     livro_value_y = livro_label_y
+
     draw_column_registro(p, 'Livro:', livro_label_x, livro_label_y, 'CBA002', livro_value_x, livro_value_y)
 
     folha_label_x = livro_label_x + 470
@@ -261,6 +239,32 @@ def pdf2(request):
     draw_column_registro(p, 'Observação:', observacao_label_x, observacao_label_y,
                          'Reconhecido pela Port. MEC nº 815 de 29/10/2015, publicada no D.O.U. de 30/10/2015.',
                          observacao_value_x, observacao_value_y)
+
+
+def pdf2(request):
+    response = HttpResponse(content_type='application/pdf')
+    d = datetime.today().strftime('%d-%m-%Y %H-%M-%S')
+    response['Content-Disposition'] = f'inline; filename="{d}.pdf"'
+
+    buffer = io.BytesIO()
+    p = canvas.Canvas(buffer, pagesize=A4)
+
+    # Modified
+    # A4 - 595 x 842
+    x = 20
+    y2 = 55
+    width = 555
+    height = 365
+    y1 = 435
+
+    p.rect(x, y1, width, height)
+    p.rect(x, y2, width, height)
+
+    draw_section_images(p, x, y1, width, height)
+    draw_section_images(p, x, 0, width, height, first_section=False)
+
+    draw_section_fields(p, x)
+    draw_section_fields(p, x, first_section=False)
     # /Modified
 
     # Data to print
