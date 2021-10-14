@@ -164,15 +164,12 @@ def pdf2(request):
     draw_column_registro(p, 'Estado de Nascimento:', estado_nascimento_label_x, estado_nascimento_label_y, 'MT',
                          estado_nascimento_value_x, estado_nascimento_value_y)
 
-    # TODO
-    '''
-    estado_expedidor_label_x = rg_label_x + 385
-    estado_expedidor_label_y = rg_label_y
-    estado_expedidor_value_x = estado_expedidor_label_x + 90
+    estado_expedidor_label_x = data_nascimento_label_x + 385
+    estado_expedidor_label_y = data_nascimento_label_y
+    estado_expedidor_value_x = estado_expedidor_label_x + 75
     estado_expedidor_value_y = estado_expedidor_label_y
-    draw_column_registro(p, 'Nacionalidade:', estado_expedidor_label_x, estado_expedidor_label_y, 'MT',
+    draw_column_registro(p, 'Nacionalidade:', estado_expedidor_label_x, estado_expedidor_label_y, 'Brasileira',
                          estado_expedidor_value_x, estado_expedidor_value_y)
-    '''
 
     curso_label_x = x + 20
     curso_label_y = data_nascimento_label_y - 15
@@ -180,15 +177,22 @@ def pdf2(request):
     curso_value_y = curso_label_y
     draw_column_registro(p, 'Curso:', curso_label_x, curso_label_y, 'Tecnologia em Controle de Obras', curso_value_x,
                          curso_value_y)
-    curso_label_x = x + 20
-    curso_label_y = curso_label_y - 15
-    curso_value_x = curso_label_x + 35
-    curso_value_y = curso_label_y
-    draw_column_registro(p, 'Título:', curso_label_x, curso_label_y, 'Tecnólogo', curso_value_x,
-                         curso_value_y)
+    titulo_label_x = x + 20
+    titulo_label_y = curso_label_y - 15
+    titulo_value_x = titulo_label_x + 35
+    titulo_value_y = titulo_label_y
+    draw_column_registro(p, 'Título:', titulo_label_x, titulo_label_y, 'Tecnólogo', titulo_value_x,
+                         titulo_value_y)
+
+    grau_escolaridade_label_x = titulo_label_x + 350
+    grau_escolaridade_label_y = titulo_label_y
+    grau_escolaridade_value_x = grau_escolaridade_label_x + 110
+    grau_escolaridade_value_y = grau_escolaridade_label_y
+    draw_column_registro(p, 'Grau de Escolaridade:', grau_escolaridade_label_x, grau_escolaridade_label_y, 'Terceiro',
+                         grau_escolaridade_value_x, grau_escolaridade_value_y)
 
     portaria_label_x = x + 20
-    portaria_label_y = curso_label_y - 15
+    portaria_label_y = titulo_label_y - 15
     portaria_value_x = portaria_label_x + 145
     portaria_value_y = portaria_label_y
     draw_column_registro(p, 'Portaria de Reconhecimento:', portaria_label_x, portaria_label_y,
@@ -230,12 +234,25 @@ def pdf2(request):
                          servidor_responsavel_label_y, 'Neuza Ricardo Rodrigues', servidor_responsavel_value_x,
                          servidor_responsavel_value_y)
 
+    siape_label_x = servidor_responsavel_label_x + 425
+    siape_label_y = servidor_responsavel_label_y
+    siape_value_x = siape_label_x + 35
+    siape_value_y = siape_label_y
+    draw_column_registro(p, 'SIAPE:', siape_label_x, siape_label_y, '1162995', siape_value_x, siape_value_y)
+
     visto_superior_label_x = x + 20
     visto_superior_label_y = servidor_responsavel_label_y - 15
     visto_superior_value_x = visto_superior_label_x + 75
     visto_superior_value_y = visto_superior_label_y
     draw_column_registro(p, 'Visto Superior:', visto_superior_label_x, visto_superior_label_y, '_' * 60,
                          visto_superior_value_x, visto_superior_value_y)
+
+    siape_superior_label_x = visto_superior_label_x + 425
+    siape_superior_label_y = servidor_responsavel_label_y - 15
+    siape_superior_value_x = siape_superior_label_x + 35
+    siape_superior_value_y = siape_superior_label_y
+    draw_column_registro(p, 'SIAPE:', siape_superior_label_x, siape_superior_label_y, '_' * 10,
+                         siape_superior_value_x, siape_superior_value_y)
 
     observacao_label_x = x + 20
     observacao_label_y = visto_superior_label_y - 15
